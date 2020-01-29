@@ -1,0 +1,46 @@
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<!--
+ ====================================================================== 
+     janv. 2020                                                        
+
+     td1 project    
+                   
+     Lionel Clément                                                               
+     ====================================================================== 
+-->
+<project name="td1 project" default="default">
+<property name="classes.dir" location="classes"/>
+<property name="lib.dir" location="lib"/>
+<property name="src.dir" location="src"/>
+<property name="bin.dir" location="bin"/>
+<property name="jflex.dir" location="jflex"/>
+<property name="data.dir" location="data"/>
+<!--
+ ================================= 
+          target: default              
+         ================================= 
+-->
+<target name="default" depends="main" description="Exécution du projet td1">
+<java classname="Lexer" classpath="${bin.dir}" output="${data.dir}/output.txt">
+<arg value="${data.dir}/pgcd.cpp"/>
+</java>
+</target>
+<!--
+ ================================= 
+          target: main              
+         ================================= 
+-->
+<target name="main" depends="Tokenizer" description="Compilation du projet td1">
+<mkdir dir="${bin.dir}"/>
+<javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.dir}" classpath="" debug="on"/>
+</target>
+<!--
+ =================================
+          target: Tokenizer
+         ================================= 
+-->
+<target name="Tokenizer" description="Exécution de JFlex">
+<taskdef name="jflex" classname="jflex.anttask.JFlexTask" classpath="lib/jflex-full-1.7.0.jar"/>
+<jflex file="${jflex.dir}/Lexer.jflex" destdir="${src.dir}"/>
+</target>
+</project>
