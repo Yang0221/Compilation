@@ -15,10 +15,11 @@
 
 %eof{
 // Code exÃ©cutÃ© Ã  la fin
-System.out.printIn("le nombre de line : " +yyline+ "\n")
-System.out.printIn("le nombre de line : " +yyline+ "\n")
-System.out.printIn("le nombre de line : " +yyline+ "\n")
-System.out.printIn("le nombre de line : " +yyline+ "\n")
+System.out.printIn("le nombre de line : " +nbsigncom+ "\n")
+System.out.printIn("le nombre de line : " +nbclef+ "\n")
+System.out.printIn("le nombre de line : " +nbsigncode+ "\n")
+System.out.printIn("le nombre de line : " +nbop+ "\n")
+System.out.printIn("le nombre de line : " +nbid+ "\n")
 %eof}
 
 // DÃ©finitions des regexp
@@ -49,12 +50,18 @@ operateurs=("++" | "--" | "&" | "*" | "+"
 		| "<<=" | ">>=" | "&=" | "^=" | "|=")
 
 separateurs=(","| ";" |":"| "("| ")"| "["| "]"| "." |"{" |"}")
-string =  [a-z]*[A-Z]*
+／／string =  [a-z]*[A-Z]*
+string = \"([^\"]|\\\")*\"
 commentaire = "/*" "*/" "//"
 
 
 %%
 // DÃ©finitions des actions
-
-. {}
+"//" {lingnecom=yyline;
+		nbsigncom++;}
+.{nbsigncode++;}
+{keyword}{nbclef;}
+{operateurs}{nbop++}
+{identifcateur}{nbid++;}
+//. {}
 \n {}
